@@ -1,4 +1,7 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { adopt } from "../API";
+import { Link } from "react-router-dom";
 
 const PetItem = ({ pet }) => {
   return (
@@ -10,9 +13,13 @@ const PetItem = ({ pet }) => {
         className="w-[200px] rounded-md
       "
       />
-      <button className=" border border-black px-5 py-1 rounded-md hover:bg-[black] hover:text-white">
-        View
-      </button>
+
+      <Link to={`/pets/${pet.id}`}>
+        <button className=" border border-black px-5 py-1 rounded-md hover:bg-[black] hover:text-white">
+          View
+        </button>
+        <button>Adopt</button>
+      </Link>
     </div>
   );
 };

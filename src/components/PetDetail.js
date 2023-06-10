@@ -1,7 +1,23 @@
 import React from "react";
 import petsData from "../petsData";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { adopt, getById } from "../API";
+import { useParams } from "react-router-dom";
+
 const PetDetail = () => {
-  const pet = petsData[0];
+  const queryClient = useQueryClient();
+
+  const petId = useParams().petId;
+  const res = useQuery(["pet"], () => getById(petId));
+
+  const updatePet = useMutation(() => adopt(petId), {
+    onSuccess: () => queryClient.invalidateQueries(["pets"]),
+  });
+  const pet = res?.data?.data;
+  if (!pet) {
+    return <h1> There is no pet with the id: {petId}</h1>;
+  }
+
   return (
     <div className="bg-[#F9E3BE] w-screen h-[100vh] flex justify-center items-center">
       <div className="border border-black rounded-md w-[70%] h-[70%] overflow-hidden flex flex-col md:flex-row p-5">
@@ -17,7 +33,10 @@ const PetDetail = () => {
           <h1>Type: {pet.type}</h1>
           <h1>adopted: {pet.adopted}</h1>
 
-          <button className="w-[70px] border border-black rounded-md  hover:bg-green-400 mb-5">
+          <button
+            className="w-[70px] border border-black rounded-md  hover:bg-green-400 mb-5"
+            onClick={updatePet.mutate}
+          >
             Adobt
           </button>
 
