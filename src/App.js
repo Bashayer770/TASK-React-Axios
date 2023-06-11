@@ -3,10 +3,10 @@ import Home from "./components/Home";
 import Modal from "./components/Modal";
 import Navbar from "./components/Navbar";
 import PetDetail from "./components/PetDetail";
-import PetItem from "./components/PetItem";
+
 import PetList from "./components/PetList";
 import { Route, Routes } from "react-router-dom";
-import { Addpet } from "./API";
+import Addpets from "./components/Addpets";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,7 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/pets" element={<PetList />} />
           <Route path="/pets/:petId" element={<PetDetail />} />
-          <Route path="/addpets" element={<Addpet />} />
+          <Route path="/addpets" element={<Addpets />} />
         </Routes>
       </QueryClientProvider>
     </div>
